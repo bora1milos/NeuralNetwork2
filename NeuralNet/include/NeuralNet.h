@@ -15,7 +15,7 @@ namespace BorisNetAi
 
             ~NeuralNet();
 
-            void init(int inputNeuronCount, int trainingSetBatchSize, int outputneuroncount);
+            void init(int inputNeuronCount, int trainingSetBatchSize, int outputNeuroncount);
             
             void addLayer(int neuronCount);
 
@@ -24,8 +24,9 @@ namespace BorisNetAi
             void backProp();
 
         private:
-            std::vector<Layer*> m_layer;
+            std::vector<Layer* > m_layer;
             TraningSet* m_traningSet;
+            int m_trangSetBatchSize;
 
     };
 }

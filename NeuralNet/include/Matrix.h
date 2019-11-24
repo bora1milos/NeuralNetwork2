@@ -8,22 +8,25 @@ namespace BorisNetAi
     class Matrix
     {
         public:
-            Matrix(int rows, int columns) : m_rows{rows}, m_columnts{columns}
-            {
-                m_total = rows * columns;
-                data = (double*)_aligned_malloc(sizeof(double) * total, 64);
-            }
+            Matrix(int rows, int columns);
 
-            ~Matrix()
-            {
-                _aligned_free(data);
-            }
-        
+            ~Matrix();
+
+            void MUL(Matrix& a, Matrix& b);
+
+            void HADAMARD(Matrix& a);
+
+            void ADD(Matrix& a);
+
+            void SUB(Matrix& a);
+            
+            float& operator()(int row, int col) { return m_data [row + col * row]; }
+
         private:
-            double* m_data;
-            int m_rows, m_columnts, m_total;
-
-
+        
+            float* m_data;
+        
+            int m_rows, m_columns, m_total;
 
     };
 }

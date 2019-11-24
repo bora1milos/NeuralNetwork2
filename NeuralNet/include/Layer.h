@@ -16,12 +16,20 @@ namespace BorisNetAi
 
             void backProp();
 
-            void setPreviousLayer(Layer* previousLayer) {m_previousLayer = previousLayer;} 
+            // Getters
+            
+            // Setters
+            void setInputLayerActivationMatrix(int neuronCount, int batchSize);
+            void setPreviousLayer(Layer* previousLayer, int batchSize);
 
         private:
+            // Activations after activation function
             Matrix* m_activations;
+            // Activation prior to activation function
             Matrix* m_sums;
+            //
             Matrix* m_bias;
+            // Weights to privious layer
             Matrix* m_weights; 
 
             Matrix* m_deltaSums;
