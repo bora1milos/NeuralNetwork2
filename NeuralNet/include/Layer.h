@@ -12,9 +12,11 @@ namespace BorisNetAi
 
             ~Layer();
 
-            void forwardProp();
+            void feedForward();
 
             void backProp();
+
+            void setActivationFunction(NEURON_ACTIVATION_FUNCTION funcAct, NEURON_ACTIVATION_FUNCTION funcDerv);
 
             // Getters
             
@@ -41,6 +43,9 @@ namespace BorisNetAi
 
             Layer *m_previousLayer;
             Layer *m_nextLayer;
+
+            NEURON_ACTIVATION_FUNCTION m_funcAct;
+            NEURON_ACTIVATION_FUNCTION m_funcDerv;
 
     };
 }

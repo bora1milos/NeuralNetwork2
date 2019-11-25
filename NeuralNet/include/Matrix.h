@@ -2,9 +2,12 @@
 #define _MATRIX_
 
 #include "Matrix.h"
+#include <functional>
 
 namespace BorisNetAi
 {
+    typedef std::function<float(float)> NEURON_ACTIVATION_FUNCTION;
+
     class Matrix
     {
         public:
@@ -19,6 +22,12 @@ namespace BorisNetAi
             void ADD(Matrix& a);
 
             void SUB(Matrix& a);
+
+            void ADD_COLL_VEC(Matrix& a);
+
+            void applyFunction(Matrix& a, NEURON_ACTIVATION_FUNCTION func);
+
+            void randomize();
             
             float& operator()(int row, int col) { return m_data [row + col * row]; }
 

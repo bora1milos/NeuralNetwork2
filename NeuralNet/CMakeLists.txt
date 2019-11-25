@@ -6,6 +6,7 @@ project(NeuralNet)
 set (SOURCE source/NeuralNet.cpp 
             source/Layer.cpp 
             source/Matrix.cpp
+            source/ActivationFunction.cpp
             )
 
 add_library(${PROJECT_NAME} ${SOURCE})

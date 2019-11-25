@@ -1,4 +1,5 @@
 #include "NeuralNet.h"
+#include "ActivationFunction.h"
 
 namespace BorisNetAi
 {
@@ -7,8 +8,10 @@ namespace BorisNetAi
     NeuralNet::~NeuralNet()
     {
         for(Layer* layer : m_layer)
-            delete layer;
-        
+        {
+            if (layer != nullptr)
+                delete layer;
+        }
         m_layer.clear();
 
     }
@@ -33,14 +36,27 @@ namespace BorisNetAi
         if (m_layer.size() < 1)
             throw "An input layer should be present";
         
+        m_layer.back()->setActivationFunction(Relu, ReluDerivative);
+
         Layer* hiddenLayer = new Layer(neuronCount);
 
         hiddenLayer->setPreviousLayer(m_layer.back(), m_trangSetBatchSize);
 
         m_layer.push_back(hiddenLayer);
+
+        m_layer.back()->setActivationFunction(LogisticFunction, LogisticFunctionDerivative);
     }
 
-    void NeuralNet::forwardProp(){}
+    void NeuralNet::forwardProp()
+    {
+        if (m_layer.size() > 0)
+            throw "net cannot feed forward, there are not enough layers";
 
-    void NeuralNet::backProp(){}
+        m_layer[0]->feedForward();
+    }
+
+    void NeuralNet::backProp()
+    {
+
+    }
 }

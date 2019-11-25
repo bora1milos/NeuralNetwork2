@@ -13,6 +13,8 @@ namespace BorisNetAi
             , m_deltaWeights {nullptr}
             , m_bias {nullptr}
             , m_deltaBias {nullptr}
+            , m_previousLayer {nullptr}
+            , m_nextLayer {nullptr}
     {
 
     }
@@ -42,6 +44,15 @@ namespace BorisNetAi
         
         if (m_deltaBias != nullptr)
             delete m_deltaBias;
+        
+        if (m_previousLayer != nullptr)
+        {
+            delete m_previousLayer;
+            m_previousLayer = nullptr;
+        }
+
+        if (m_nextLayer != nullptr)
+            delete m_nextLayer;
     }
 
     void Layer::setInputLayerActivationMatrix(int neuronCount, int batchSize)
@@ -68,6 +79,7 @@ namespace BorisNetAi
         m_deltaSums = new Matrix(m_neuronCount, batchSize);
 
         m_weights = new Matrix(m_neuronCount, batchSize);
+        m_weights->randomize();
         m_deltaWeights = new Matrix(m_neuronCount, batchSize);
 
         m_bias = new Matrix(m_neuronCount, 1);
@@ -76,4 +88,30 @@ namespace BorisNetAi
         m_previousLayer = previousLayer;
         m_previousLayer->m_nextLayer = this;
     } 
+
+    void Layer::feedForward()
+    {
+        if (m_previousLayer != nullptr)
+        {
+            m_sums->MUL(*m_weights, *m_previousLayer->m_activations);
+            m_sums->ADD_COLL_VEC(*m_bias);
+        }
+
+        if (m_nextLayer != nullptr)
+        {
+            // Perform tha activation function
+            if (m_previousLayer != nullptr)
+                m_sums->applyFunction(*m_activations, m_funcAct);
+
+            m_nextLayer->feedForward();
+        }
+    }
+
+    void Layer::setActivationFunction(NEURON_ACTIVATION_FUNCTION funcAct, NEURON_ACTIVATION_FUNCTION funcDerv)
+    {
+        m_funcAct = funcAct;
+        m_funcDerv = funcDerv;
+
+
+    }
 }

@@ -9,6 +9,8 @@ int main()
     nn->addLayer(3);
     nn->addLayer(4);
 
+    nn->forwardProp();
+
     delete nn;
     std::cout << "test " << std::endl;
     return 0;
