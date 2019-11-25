@@ -9,11 +9,10 @@ namespace BorisNetAi
     {
         for(Layer* layer : m_layer)
         {
-            if (layer != nullptr)
-                delete layer;
+            delete layer;
         }
-        m_layer.clear();
 
+        m_layer.clear();
     }
 
     void NeuralNet::init(int inputNeuronCount, int trainingSetBatchSize, int outputNeuronCount)
@@ -49,7 +48,7 @@ namespace BorisNetAi
 
     void NeuralNet::forwardProp()
     {
-        if (m_layer.size() > 0)
+        if (m_layer.size() < 1)
             throw "net cannot feed forward, there are not enough layers";
 
         m_layer[0]->feedForward();

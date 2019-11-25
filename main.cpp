@@ -3,6 +3,8 @@
 
 int main()
 {
+    try
+    {
     BorisNetAi::NeuralNet* nn = new BorisNetAi::NeuralNet();
     nn->init(10, 5, 4);
     nn->addLayer(10);
@@ -13,5 +15,11 @@ int main()
 
     delete nn;
     std::cout << "test " << std::endl;
+    }
+    catch(std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+
+    }
     return 0;
 }

@@ -44,15 +44,6 @@ namespace BorisNetAi
         
         if (m_deltaBias != nullptr)
             delete m_deltaBias;
-        
-        if (m_previousLayer != nullptr)
-        {
-            delete m_previousLayer;
-            m_previousLayer = nullptr;
-        }
-
-        if (m_nextLayer != nullptr)
-            delete m_nextLayer;
     }
 
     void Layer::setInputLayerActivationMatrix(int neuronCount, int batchSize)

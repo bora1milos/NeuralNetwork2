@@ -10,17 +10,12 @@ namespace BorisNetAi
     Matrix::Matrix(int rows, int columns) : m_rows{rows}, m_columns{columns}, m_data {nullptr}
     {
         m_total = rows * columns;
-        //m_data = (float*)_aligned_malloc(sizeof(float) * m_total, 64);
-        m_data = new float [m_total];
+        m_data = (float*)_aligned_malloc(sizeof(float) * m_total, 64);
     }
     
     Matrix::~Matrix()
     {
-        //_aligned_free(m_data);
-        if (m_data != nullptr)
-            delete [] m_data;
-        
-        m_data = nullptr;
+        _aligned_free(m_data);
     }
 
     void Matrix::MUL(Matrix& a, Matrix& b)
@@ -102,7 +97,7 @@ namespace BorisNetAi
 
     void Matrix::applyFunction(Matrix& a, NEURON_ACTIVATION_FUNCTION func)
     {
-        for (auto i = 0; i < a.m_total; ++i)
+        for (auto i = 0; i < m_total; ++i)
         {
             a.m_data[i] = func(m_data[i]);
         }
